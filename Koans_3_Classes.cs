@@ -24,7 +24,8 @@ namespace LearnDotNet
             var nameProperty = person.GetType().GetProperty("Name");
             
             nameProperty.CanRead.Should().Be(true);
-            nameProperty.CanWrite.Should().Be(false);
+            nameProperty.SetMethod?.IsPublic.Should().BeFalse();
+            nameProperty.Name.Should().Be("Name");
             var propertyValue = InvokeMember(person, nameProperty);
             propertyValue.Should().Be("Unnamed");
         }
@@ -39,7 +40,7 @@ namespace LearnDotNet
                     null);
         }
     }
-
+    
     public interface IPerson
     {
         string SayHello();
