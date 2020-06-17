@@ -29,6 +29,18 @@ namespace LearnDotNet
                 .HasPrivateSetterIfAny()
                 .ReadValueOnInstance(person).Should().Be("Unnamed");
         }
+
+        [Fact]
+        public void add_a_public_method_baptize_that_change_property_name()
+        {
+            var person = FILL_ME_IN;
+            var name = "";
+            
+            // person.Baptize("Jo");
+            // name = person.Name;
+            
+            name.Should().Be("Jo");
+        }
     }
     
     public interface IPerson
