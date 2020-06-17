@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 using FluentAssertions;
+using FluentAssertions.Primitives;
 using Xunit;
 
 namespace LearnDotNet
@@ -17,27 +18,16 @@ namespace LearnDotNet
         }
         
         [Fact]
-        public void add_a_readonly_property_Name_to_class_person_initialized_to_unnamed()
+        public void add_a_readonly_property_Name_to_class_person_initialized_with_unnamed()
         {
             var person = FILL_ME_IN;
 
             var nameProperty = person.GetType().GetProperty("Name");
             
-            nameProperty.CanRead.Should().Be(true);
-            nameProperty.SetMethod?.IsPublic.Should().BeFalse();
-            nameProperty.Name.Should().Be("Name");
-            var propertyValue = InvokeMember(person, nameProperty);
-            propertyValue.Should().Be("Unnamed");
-        }
-        
-        private static object InvokeMember(object person, PropertyInfo propertyInfo)
-        {
-            return person.GetType()
-                .InvokeMember(propertyInfo.Name,
-                    BindingFlags.GetProperty,
-                    Type.DefaultBinder,
-                    person,
-                    null);
+            nameProperty.Named("Name")
+                .CanBeRead()
+                .HasPrivateSetterIfAny()
+                .ReadValueOnInstance(person).Should().Be("Unnamed");
         }
     }
     
