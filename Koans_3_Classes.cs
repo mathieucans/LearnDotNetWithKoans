@@ -6,10 +6,15 @@ namespace LearnDotNet
 {
     public class Koans_3_Classes : Koan
     {
+        private T CreatePerson<T>()
+        {
+            return (T) FILL_ME_IN;
+        }
+
         [Fact]
         public void k01_a_person_has_a_name_property_that_cant_be_set()
         {
-            var person = FILL_ME_IN;
+            var person = CreatePerson<object>();
 
             var nameProperty = person.GetType().GetProperty("Name");
 
@@ -22,15 +27,15 @@ namespace LearnDotNet
         [Fact]
         public void k02_a_person_implement_IPerson_interface()
         {
-            var person = FILL_ME_IN;
+            var person = CreatePerson<object>();
 
             person.Should().BeAssignableTo<IPerson>();
         }
 
-        [Fact]
+        [Fact]    
         public void k03_when_a_person_is_batised_its_name_is_set()
         {
-            IPerson person = FILL_ME_IN as IPerson;
+            IPerson person = CreatePerson<IPerson>();
 
             person.Baptize("Jo");
 
@@ -40,7 +45,7 @@ namespace LearnDotNet
         [Fact]
         public void k04_a_person_let_its_observer_known_that_its_properties_change_by_implement_ISubject()
         {
-            var person = FILL_ME_IN as IPerson;
+            var person = CreatePerson<IPerson>();
 
             person.Should().BeAssignableTo<ISubject>();
         }
@@ -48,7 +53,7 @@ namespace LearnDotNet
         [Fact]
         public void k05_when_a_person_is_batised_it_is_notified()
         {
-            IPerson person = FILL_ME_IN as IPerson;
+            IPerson person = CreatePerson<IPerson>();
             var subject = person as ISubject;
             var notified = false;
             subject.NameChanged += (person, args) => { notified = true; };
