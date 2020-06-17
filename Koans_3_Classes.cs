@@ -1,8 +1,5 @@
 using System;
-using System.Linq;
-using System.Reflection;
 using FluentAssertions;
-using FluentAssertions.Primitives;
 using Xunit;
 
 namespace LearnDotNet
@@ -10,20 +7,12 @@ namespace LearnDotNet
     public class Koans_3_Classes : Koan
     {
         [Fact]
-        public void create_class_that_implement_IPerson_intefrace()
-        {
-            var person = FILL_ME_IN;
-
-            person.Should().BeAssignableTo<IPerson>();
-        }
-        
-        [Fact]
-        public void add_a_readonly_property_Name_to_class_person_initialized_with_unnamed()
+        public void k01_a_person_has_a_name_property_that_cant_be_set()
         {
             var person = FILL_ME_IN;
 
             var nameProperty = person.GetType().GetProperty("Name");
-            
+
             nameProperty.Named("Name")
                 .CanBeRead()
                 .HasPrivateSetterIfAny()
@@ -31,20 +20,53 @@ namespace LearnDotNet
         }
 
         [Fact]
-        public void add_a_public_method_baptize_that_change_property_name()
+        public void k02_a_person_implement_IPerson_interface()
         {
             var person = FILL_ME_IN;
-            var name = "";
-            
-            // person.Baptize("Jo");
-            // name = person.Name;
-            
-            name.Should().Be("Jo");
+
+            person.Should().BeAssignableTo<IPerson>();
+        }
+
+        [Fact]
+        public void k03_when_a_person_is_batised_its_name_is_set()
+        {
+            IPerson person = FILL_ME_IN as IPerson;
+
+            person.Baptize("Jo");
+
+            person.Name.Should().Be("Jo");
+        }
+
+        [Fact]
+        public void k04_a_person_let_its_observer_known_that_its_properties_change_by_implement_ISubject()
+        {
+            var person = FILL_ME_IN as IPerson;
+
+            person.Should().BeAssignableTo<ISubject>();
+        }
+
+        [Fact]
+        public void k05_when_a_person_is_batised_it_is_notified()
+        {
+            IPerson person = FILL_ME_IN as IPerson;
+            var subject = person as ISubject;
+            var notified = false;
+            subject.NameChanged += (person, args) => { notified = true; };
+
+            person.Baptize("Jo");
+
+            notified.Should().BeTrue();
         }
     }
-    
+
+    public interface ISubject
+    {
+        event EventHandler NameChanged;
+    }
+
     public interface IPerson
     {
-        string SayHello();
+        string Name { get; }
+        void Baptize(string name);
     }
 }
