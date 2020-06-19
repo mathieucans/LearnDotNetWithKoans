@@ -18,5 +18,10 @@ namespace LearnDotNet.utils
         {
             Console.SetOut(_outToRestore);
         }
+
+        public override string ToString()
+        {
+            return _stringWriter.ToString();
+        }
     }
 }
