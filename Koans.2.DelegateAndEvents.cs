@@ -47,7 +47,7 @@ namespace LearnDotNet
         static string MyNameIsThomas() => "Thomas";
 
         [Fact]
-        public void delegates_can_be_assigned_to_static_function()
+        public void Koan01_delegates_can_be_assigned_to_static_function()
         {
             GetYourName myNameIsGet = AFFECT_ME();
 
@@ -55,7 +55,7 @@ namespace LearnDotNet
         }
 
         [Fact]
-        public void delegate_can_be_assigned_to_object_method()
+        public void Koan02_delegate_can_be_assigned_to_object_method()
         {
             GetYourName myNameIsGet = AFFECT_ME();
 
@@ -63,7 +63,7 @@ namespace LearnDotNet
         }
 
         [Fact]
-        public void delegate_can_be_assigned_to_lambda()
+        public void Koan03_delegate_can_be_assigned_to_lambda()
         {
             GetYourName myNameIsGet = () => "Mathieu";
 
@@ -71,7 +71,7 @@ namespace LearnDotNet
         }
 
         [Fact]
-        public void delegate_have_invocation_list()
+        public void Koan04_delegate_have_invocation_list()
         {
             using (var console = new ConsoleCapture())
             {
@@ -80,12 +80,12 @@ namespace LearnDotNet
 
                 sayYourName();
 
-                console.ToString().Should().Be("FILL_ME_IN");
+                console.ToString().Should().Be("FILL_ME_IN\n");
             }
         }
 
         [Fact]
-        public void but_only_the_last_one_returns()
+        public void Koan05_but_only_the_last_one_returns()
         {
             GetYourName chainedName = _bastien.GetName;
 
@@ -95,7 +95,7 @@ namespace LearnDotNet
         }
         
         [Fact]
-        public void events_are_delegates_with_restrictions()
+        public void Koan06_events_are_delegates_with_restrictions()
         {
             using (var console = new ConsoleCapture())
             {
@@ -104,7 +104,7 @@ namespace LearnDotNet
 
                 newBorn.SetName("Imen");
 
-                console.ToString().Should().Be("FILL ME IN");
+                console.ToString().Should().Be("FILL ME IN\n");
                 
                 // newBorn.NameChanged = (n) => { Console.WriteLine("you cannot affect an event with operator equal" );}
                 // newBorn.NameChanged(); // you cannot invoke event from outside it class
@@ -114,7 +114,7 @@ namespace LearnDotNet
         public event Action KoanFinished;
         
         [Fact]
-        public void events_are_null_until_they_are_affected()
+        public void Koan07_events_are_null_until_they_are_affected()
         {
             using (var console = new ConsoleCapture())
             {
@@ -123,7 +123,7 @@ namespace LearnDotNet
 
                 KoanFinished.Invoke();
 
-                console.ToString().Should().Be("FILL ME IN");
+                console.ToString().Should().Be("FILL ME IN\n");
                 
                 KoanFinished -= Finished;
                 KoanFinished.Should().BeNull();
@@ -132,7 +132,7 @@ namespace LearnDotNet
 
         private static void Finished()
         {
-            Console.WriteLine("finished !");
+            Console.WriteLine("Finished!\n");
         }
 
         private static StringWriter CaptureConsole()
