@@ -51,7 +51,7 @@ namespace LearnDotNet
         {
             GetYourName myNameIsGet = AFFECT_ME();
 
-            myNameIsGet().Should().Be("Joe");
+            myNameIsGet().Should().Be("Thomas");
         }
 
         [Fact]
@@ -111,8 +111,29 @@ namespace LearnDotNet
             }
         }
         
-        // TODO Event are null until they are affected
+        public event Action KoanFinished;
         
+        [Fact]
+        public void events_are_null_until_they_are_affected()
+        {
+            using (var console = new ConsoleCapture())
+            {
+                KoanFinished.Should().BeNull();
+                KoanFinished += Finished;
+
+                KoanFinished.Invoke();
+
+                console.ToString().Should().Be("FILL ME IN");
+                
+                KoanFinished -= Finished;
+                KoanFinished.Should().BeNull();
+            }
+        }
+
+        private static void Finished()
+        {
+            Console.WriteLine("finished !");
+        }
 
         private static StringWriter CaptureConsole()
         {
