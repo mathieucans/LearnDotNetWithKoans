@@ -2,7 +2,7 @@ using System;
 using System.Reflection;
 using FluentAssertions;
 
-namespace LearnDotNet
+namespace LearnDotNet.utils
 {
     public static class PropertyInfoExtensions {
         public static PropertyInfo CanBeRead(this PropertyInfo nameProperty)

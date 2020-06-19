@@ -1,49 +1,44 @@
 using System;
 using System.IO;
 using FluentAssertions;
+using LearnDotNet.utils;
 using Xunit;
 
 namespace LearnDotNet
 {
-    delegate string GetYourName();
-
-    delegate void SayYourName();
-
-    class Person
-    {
-        private string _name;
-
-        public Person(string name)
-        {
-            _name = name;
-        }
-
-        public string GetName()
-        {
-            return _name;
-        }
-
-        public void SayYourName()
-        {
-            Console.WriteLine($"My name is {_name}");   
-        }
-    }
-
+    
     public class Koans_2_DelegateAndEvents : Koan
     {
+        delegate string GetYourName();
+
+        delegate void SayYourName();
+
+        class Person
+        {
+            private string _name;
+
+            public Person(string name)
+            {
+                _name = name;
+            }
+
+            public string GetName()
+            {
+                return _name;
+            }
+
+            public void SayYourName()
+            {
+                Console.WriteLine($"My name is {_name}");   
+            }
+        }
+
         private Person _bastien = new Person("Bastien");
 
         private Person _emeric = new Person("Emeric");
 
         static string MyNameIsThomas() => "Thomas";
-
-
-        [Fact]
-        public void delegates_are_objects()
-        {
-            typeof(GetYourName).Should().BeAssignableTo<object>();
-        }
-
+        
         [Fact]
         public void delegates_can_be_assigned_to_static_function()
         {
@@ -64,14 +59,25 @@ namespace LearnDotNet
         [Fact]
         public void delegate_have_invocation_list()
         {
-            var console = CaptureConsole();
+            using (var console = new ConsoleCapture())
+            {
+                SayYourName sayYourName = _bastien.SayYourName;
+                sayYourName += _emeric.SayYourName;
+                
+                sayYourName();
+                
+                console.ToString().Should().Be("FILL_ME_IN");
+            }
+        }
+        
+        [Fact]
+        public void but_only_the_last_one_returns()
+        {
+            GetYourName chainedName = _bastien.GetName;
+            
+            chainedName += _emeric.GetName;
 
-            SayYourName sayYourName = _bastien.SayYourName;
-            sayYourName += _emeric.SayYourName;
-            
-            sayYourName();
-            
-            console.ToString().Should().Be("FILL_ME_IN");
+            chainedName().Should().Be("FILL_ME_IN");
         }
 
         private static StringWriter CaptureConsole()
