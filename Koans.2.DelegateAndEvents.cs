@@ -18,12 +18,38 @@ namespace LearnDotNet
         [Fact]
         public void delegates_can_be_assigned_to_static_function()
         {
-            // Initialize delegate with static funciton
-            WhatsYourName myNameIsWhat = null;
+            WhatsYourName myNameIsWhat = AFFECT_ME();
 
             myNameIsWhat().Should().Be("Joe");
         }
+
+        class Person
+        {
+            private string _name;
+
+            public Person(string name)
+            {
+                _name = name;
+            }
+            public string SayName()
+            {
+                return _name;
+            }
+        }
         
-        
+        [Fact]
+        public void delegate_can_be_assigned_to_object_funciton()
+        {
+            var bastien = new Person("Bastien");
+
+            WhatsYourName myNameIsWhat = AFFECT_ME();
+
+            myNameIsWhat().Should().Be("Bastien");
+        }
+
+        private WhatsYourName AFFECT_ME()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

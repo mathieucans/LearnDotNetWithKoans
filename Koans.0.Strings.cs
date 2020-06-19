@@ -302,6 +302,8 @@ broken line";
         }
 
     }
+	
+	
 
 	public class Koan
 	{
@@ -310,6 +312,8 @@ broken line";
         public class FillMeIn
         {
         }
+        
+      
 	}
 
     
