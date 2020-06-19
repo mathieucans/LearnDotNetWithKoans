@@ -5,13 +5,12 @@ using Xunit;
 
 namespace LearnDotNet
 {
+    internal class Person
+    {
+    }
+
     public class Koans_3_Classes : Koan
     {
-        private T CreatePerson<T>()
-        {
-            return (T) FILL_ME_IN;
-        }
-
         [Fact]
         public void k01_a_person_has_a_name_property_that_cant_be_set()
         {
@@ -62,6 +61,11 @@ namespace LearnDotNet
             person.Baptize("Jo");
 
             notified.Should().BeTrue();
+        }
+
+        private T CreatePerson<T>() where T : class
+        {
+            return new Person() as T;
         }
     }
 
